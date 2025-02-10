@@ -1,4 +1,4 @@
-package com.example.myapplication.db;
+package com.example.myapplication6.db;
 
 /**
  * Created by anupamchugh on 19/10/15.
