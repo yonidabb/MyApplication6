@@ -37,6 +37,7 @@ fun RegistrationScreen(dbManager: DBManager) {
     var city by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
 
+
     Column() {
         OutlinedTextField(value = name, onValueChange = { name = it }, label = { Text("Name1") })
         OutlinedTextField(value = age, onValueChange = { age = it }, label = { Text("Age") })
