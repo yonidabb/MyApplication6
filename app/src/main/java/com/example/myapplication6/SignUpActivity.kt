@@ -37,9 +37,14 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.myapplication6.db.DBManager
 import com.example.myapplication6.ui.theme.MyApplication6Theme
 
 class SignUpActivity : ComponentActivity() {
+
+//    private lateinit var dbManager: DBManager
+    val dbManager = DBManager(this)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -48,7 +53,8 @@ class SignUpActivity : ComponentActivity() {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     Greeting2(
                         name = "Android",
-                        modifier = Modifier.padding(innerPadding)
+                        modifier = Modifier.padding(innerPadding),
+                        dbManager=dbManager
                     )
                 }
             }
@@ -57,7 +63,7 @@ class SignUpActivity : ComponentActivity() {
 }
 
 @Composable
-fun Greeting2(name: String, modifier: Modifier = Modifier) {
+fun Greeting2(name: String, modifier: Modifier = Modifier,dbManager:DBManager) {
     var email by remember {
         mutableStateOf("")
     }
@@ -136,6 +142,9 @@ fun Greeting2(name: String, modifier: Modifier = Modifier) {
         Spacer(modifier=Modifier.height(20.dp))
 
         Button(onClick = {
+            Log.d("Filled button", "Filled button clicked.")
+//            dbManager.insert()
+
 
         }) {
             Text(
@@ -152,10 +161,10 @@ fun Greeting2(name: String, modifier: Modifier = Modifier) {
 
 }
 
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview2() {
-    MyApplication6Theme {
-        Greeting2("Android")
-    }
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun GreetingPreview2() {
+//    MyApplication6Theme {
+//        Greeting2("Android")
+//    }
+//}

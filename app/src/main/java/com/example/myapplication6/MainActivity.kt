@@ -102,9 +102,21 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
                 style = TextStyle(
                     fontSize = 26.sp,
                     textAlign = TextAlign.Center
+                )
+            )
+        }
+        Spacer(modifier = Modifier.height(16.dp))
+        Button(onClick = {
+            Log.d("open","open sign up")
+            mcontext.startActivity(Intent(mcontext,RegistrationActivity::class.java))
+        }) {
+            Text(
+                text = "RegistrationActivity",
+                modifier = Modifier.fillMaxWidth(),
 
-
-
+                style = TextStyle(
+                    fontSize = 26.sp,
+                    textAlign = TextAlign.Center
                 )
             )
         }
