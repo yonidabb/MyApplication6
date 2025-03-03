@@ -24,6 +24,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
@@ -32,10 +33,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.myapplication6.ui.theme.MyApplication6Theme
+import com.google.firebase.Firebase
+import com.google.firebase.firestore.firestore
+import java.time.LocalDateTime
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setup()
 //        enableEdgeToEdge()
         setContent {
             MyApplication6Theme {
@@ -48,6 +53,29 @@ class MainActivity : ComponentActivity() {
 
             }
         }
+    }
+    private val TAG = "DocSnippets"
+
+    private fun setup() {
+        // [START get_firestore_instance]
+        val db = Firebase.firestore
+        // [END get_firestore_instance]
+        // Create a new user with a first and last name
+        val session = hashMapOf(
+            "first" to "Ada",
+            "last" to "Lovelace",
+            "born" to 1815,
+            "current" to LocalDateTime.now().nano
+        )
+        // Add a new document with a generated ID
+        db.collection("sessions")
+            .add(session)
+            .addOnSuccessListener { documentReference ->
+                Log.d(TAG, "DocumentSnapshot added with ID: ${documentReference.id}")
+            }
+            .addOnFailureListener { e ->
+                Log.w(TAG, "Error adding document", e)
+            }
     }
 }
 
@@ -64,8 +92,9 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 
         Image(
             painter = painterResource(R.drawable.logo),
-            modifier =  modifier.clip(CircleShape),
-            contentDescription = "1"
+            modifier =  modifier.scale(.7f).clip(CircleShape),
+            contentDescription = "1",
+
         )
         Spacer(modifier = Modifier.height(16.dp))
         Text(
@@ -73,7 +102,7 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
             fontSize = 30.sp,
             modifier = modifier
         )
-        Spacer(modifier = Modifier.height(40.dp))
+        Spacer(modifier = Modifier.height(60.dp))
 
 
         Button(onClick = {
@@ -91,27 +120,33 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
             )
         }
         Spacer(modifier = Modifier.height(16.dp))
-        Button(onClick = {
-            Log.d("open","open sign up")
-            mcontext.startActivity(Intent(mcontext,SignUpActivity::class.java))
-        }) {
-            Text(
-                text = "Signup",
-                modifier = Modifier.fillMaxWidth(),
-
-                style = TextStyle(
-                    fontSize = 26.sp,
-                    textAlign = TextAlign.Center
-                )
-            )
-        }
+//        Button(onClick = {
+//            Log.d("open","open sign up")
+//            mcontext.startActivity(Intent(mcontext,SignUpActivity::class.java))
+//        }) {
+//            Text(
+//                text = "Signup",
+//                modifier = Modifier.fillMaxWidth(),
+//
+//                style = TextStyle(
+//                    fontSize = 26.sp,
+//                    textAlign = TextAlign.Center
+//                )
+//            )
+//        }
+        Text(
+            text = "------------------------------- or -------------------------------",
+            fontSize = 16.sp,
+            modifier = modifier
+        )
         Spacer(modifier = Modifier.height(16.dp))
+
         Button(onClick = {
             Log.d("open","open sign up")
             mcontext.startActivity(Intent(mcontext,RegistrationActivity::class.java))
         }) {
             Text(
-                text = "RegistrationActivity",
+                text = "Create account",
                 modifier = Modifier.fillMaxWidth(),
 
                 style = TextStyle(
@@ -120,6 +155,23 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
                 )
             )
         }
+
+
+//        Spacer(modifier = Modifier.height(16.dp))
+//        Button(onClick = {
+//            Log.d("open","open EmailPasswordActivity")
+//            mcontext.startActivity(Intent(mcontext,EmailPasswordActivity::class.java))
+//        }) {
+//            Text(
+//                text = "EmailPasswordActivity",
+//                modifier = Modifier.fillMaxWidth(),
+//
+//                style = TextStyle(
+//                    fontSize = 26.sp,
+//                    textAlign = TextAlign.Center
+//                )
+//            )
+//        }
 
     }
 
