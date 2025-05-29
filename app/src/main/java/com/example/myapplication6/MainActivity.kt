@@ -65,10 +65,10 @@ class MainActivity : ComponentActivity() {
             "first" to "Ada",
             "last" to "Lovelace",
             "born" to 1815,
-            "current" to LocalDateTime.now().nano
+            "current" to LocalDateTime.now().toLocalDate()
         )
         // Add a new document with a generated ID
-        db.collection("sessions")
+        db.collection("sessions1")
             .add(session)
             .addOnSuccessListener { documentReference ->
                 Log.d(TAG, "DocumentSnapshot added with ID: ${documentReference.id}")
