@@ -42,7 +42,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.auth
 
-class LoginActivity : ComponentActivity() {
+class KLoginActivity : ComponentActivity() {
 
     private lateinit var auth: FirebaseAuth
 
@@ -60,6 +60,7 @@ class LoginActivity : ComponentActivity() {
                     Login("Android")
 
                 }
+
 
             }
         }
@@ -91,7 +92,7 @@ class LoginActivity : ComponentActivity() {
                     val user = auth.currentUser
                     updateUI(user)
 
-                    mcontext.startActivity(Intent(mcontext,AfterLoginActivity::class.java))
+                    mcontext.startActivity(Intent(mcontext,KAfterLoginActivity::class.java))
 //
                 } else {
                     // If sign in fails, display a message to the user.
