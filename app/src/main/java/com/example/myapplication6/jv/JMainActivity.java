@@ -7,7 +7,6 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.myapplication6.KLoginActivity;
 import com.example.myapplication6.R;
 import com.google.firebase.firestore.FirebaseFirestore;
 

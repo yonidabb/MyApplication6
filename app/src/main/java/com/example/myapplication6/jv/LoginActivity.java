@@ -13,7 +13,6 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.myapplication6.KAfterLoginActivity;
 import com.example.myapplication6.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -75,6 +74,8 @@ public class LoginActivity extends AppCompatActivity {
 
         forgetPassButton.setOnClickListener(v -> {
             String email = emailInput.getText().toString().trim();
+            Toast.makeText(this, "will reset email to"+email, Toast.LENGTH_LONG).show();
+
 
             auth.sendPasswordResetEmail(email)
                     .addOnCompleteListener(task -> {
@@ -93,10 +94,10 @@ public class LoginActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
-        FirebaseUser currentUser = auth.getCurrentUser();
-        if (currentUser != null) {
-            reload();
-        }
+//        FirebaseUser currentUser = auth.getCurrentUser();
+//        if (currentUser != null) {
+//            reload();
+//        }
     }
 
     private void signIn(Context context, String email, String password) {
