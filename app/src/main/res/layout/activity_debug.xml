@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="#121212">
+
+    <!-- Result Text -->
+    <TextView
+        android:id="@+id/debugResultText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Debug output will appear here"
+        android:textColor="#00FFAA"
+        android:textSize="16sp"
+        android:padding="12dp"
+        android:background="#1E1E1E" />
+
+    <!-- Buttons -->
+    <Button
+        android:id="@+id/btnTestTimer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Start/Stop timer"
+        android:layout_marginTop="12dp" />
+
+    <Button
+        android:id="@+id/btnTestFirebase"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Send new score"
+        android:layout_marginTop="8dp" />
+
+    <Button
+        android:id="@+id/btnTestSound"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Test Sound"
+        android:layout_marginTop="8dp" />
+
+    <Button
+        android:id="@+id/btnClear"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Clear Output"
+        android:layout_marginTop="16dp" />
+
+</LinearLayout>

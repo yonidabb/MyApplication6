@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/escape_room_red">
+
+    <!-- כפתור "חידה" -->
+
+    <fragment
+        android:id="@+id/timerFragment"
+        android:name="com.example.myapplication6.jv.TimerFragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp" />
+
+    <TextView
+        android:id="@+id/puzzleButton"
+        android:layout_width="80dp"
+        android:layout_height="32dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="190dp"
+        android:layout_marginRight="270dp"
+        android:background="@android:color/transparent"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center"
+        android:shadowColor="#FF0000"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="18"
+        android:text="חידה"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <!-- מסך קוד (המסך השחור) -->
+    <TextView
+        android:id="@+id/codeScreen"
+        android:layout_width="200dp"
+        android:layout_height="300dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="-70dp"
+        android:layout_marginRight="350dp"
+        android:textColor="#FF3A3A"
+        android:textSize="28sp"
+        android:gravity="center"
+        android:textStyle="bold" />
+
+    <!-- לוח מקשים Enter Code -->
+    <TableLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="150dp"
+        android:translationX="-200dp"
+        android:translationY="0dp"
+        android:shrinkColumns="*"
+        android:stretchColumns="*"
+        android:scaleX="0.25"
+        android:scaleY="0.25">
+
+        <TableRow>
+            <TextView android:id="@+id/num1" style="@style/KeypadButtonStyled" android:text="1"/>
+            <TextView android:id="@+id/num2" style="@style/KeypadButtonStyled" android:text="2"/>
+            <TextView android:id="@+id/num3" style="@style/KeypadButtonStyled" android:text="3"/>
+        </TableRow>
+
+        <TableRow>
+            <TextView android:id="@+id/num4" style="@style/KeypadButtonStyled" android:text="4"/>
+            <TextView android:id="@+id/num5" style="@style/KeypadButtonStyled" android:text="5"/>
+            <TextView android:id="@+id/num6" style="@style/KeypadButtonStyled" android:text="6"/>
+        </TableRow>
+
+        <TableRow>
+            <TextView android:id="@+id/num7" style="@style/KeypadButtonStyled" android:text="7"/>
+            <TextView android:id="@+id/num8" style="@style/KeypadButtonStyled" android:text="8"/>
+            <TextView android:id="@+id/num9" style="@style/KeypadButtonStyled" android:text="9"/>
+        </TableRow>
+
+        <TableRow>
+            <TextView android:id="@+id/empty" style="@style/KeypadButtonStyled" android:text=""/>
+            <TextView android:id="@+id/num0" style="@style/KeypadButtonStyled" android:text="0"/>
+            <TextView android:id="@+id/deleteBtn" style="@style/KeypadButtonStyled" android:text="⌫"/>
+        </TableRow>
+
+    </TableLayout>
+
+</RelativeLayout>

@@ -1,33 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:orientation="vertical"
-    android:padding="32dp"
-    android:gravity="center"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/futuristic_bg"
+    android:padding="24dp">
 
     <TextView
-        android:id="@+id/welcome_text"
-        android:layout_width="match_parent"
+        android:id="@+id/title_text"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Welcome"
-        android:textSize="24sp"
-        android:textAlignment="center"
-        android:layout_marginBottom="32dp"/>
+        android:text="☢ MISSION: NEUTRALIZE THE REACTOR ☢"
+        android:textColor="#00FFFF"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:fontFamily="monospace"
+        android:shadowColor="#00BFFF"
+        android:shadowRadius="20"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="80dp"/>
+
+<!--    <fragment-->
+<!--        android:id="@+id/timerFragment"-->
+<!--        android:name="com.example.myapplication6.jv.TimerFragment"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_centerHorizontal="true"-->
+<!--        android:layout_below="@id/title_text"-->
+<!--        android:layout_marginTop="60dp" />-->
+
+    <TextView
+        android:id="@+id/status_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Awaiting Command..."
+        android:textColor="#00FF88"
+        android:textSize="16sp"
+        android:shadowColor="#00FFAA"
+        android:shadowRadius="15"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/title_text"
+        android:layout_marginTop="40dp"/>
 
     <Button
-        android:id="@+id/profile_button"
-        android:layout_width="match_parent"
+        android:id="@+id/start_button"
+        android:layout_width="260dp"
         android:layout_height="wrap_content"
-        android:text="Profile"
+        android:text="🚀 START MISSION"
         android:textSize="18sp"
-        android:layout_marginBottom="16dp"/>
+        android:textStyle="bold"
+        android:textColor="#FFFFFF"
+        android:background="@drawable/glow_button"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/status_text"
+        android:layout_marginTop="40dp"
+        android:fontFamily="monospace"
+        android:padding="14dp"/>
 
     <Button
-        android:id="@+id/signout_button"
-        android:layout_width="match_parent"
+        android:id="@+id/scores_button"
+        android:layout_width="260dp"
         android:layout_height="wrap_content"
-        android:text="Signout"
-        android:textSize="18sp"/>
-</LinearLayout>
+        android:text="🏆 SCORES"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textColor="#FFFFFF"
+        android:background="@drawable/glow_button"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/start_button"
+        android:layout_marginTop="20dp"
+        android:fontFamily="monospace"
+        android:padding="14dp"/>
+
+</RelativeLayout>

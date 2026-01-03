@@ -1,5 +1,6 @@
 package com.example.myapplication6
 
+import com.example.myapplication6.jv.RegistrationActivity
 import org.junit.Test
 
 import org.junit.Assert.*
@@ -13,5 +14,12 @@ class ExampleUnitTest {
     @Test
     fun addition_isCorrect() {
         assertEquals(4, 2 + 2)
+    }
+
+    @Test
+    fun testEmail() {
+
+//        assertEquals(false, RegistrationActivity.isEmail("asaaa.com"));
+//        assertEquals(true, RegistrationActivity.isEmail("asaaa@dds.com"));
     }
 }
