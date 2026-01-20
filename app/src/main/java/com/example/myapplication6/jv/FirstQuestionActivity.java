@@ -2,7 +2,6 @@ package com.example.myapplication6.jv;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -10,8 +9,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myapplication6.GameTimer;
 import com.example.myapplication6.R;
-import com.example.myapplication6.models.Score;
-import com.example.myapplication6.models.UserService;
 
 public class FirstQuestionActivity extends AppCompatActivity {
 
@@ -37,8 +34,8 @@ public class FirstQuestionActivity extends AppCompatActivity {
     // ===== All Puzzles =====
     private final Puzzle[] puzzles = {
             new Puzzle("1948", "באיזו שנה הוקמה מדינת ישראל?"),
-//            new Puzzle("1969", "באיזו שנה נחת האדם הראשון על הירח?"),
-//            new Puzzle("1876", "באיזו שנה הומצא הטלפון?"),
+            new Puzzle("1969", "באיזו שנה נחת האדם הראשון על הירח?"),
+            new Puzzle("1876", "באיזו שנה הומצא הטלפון?"),
             new Puzzle("1989", "באיזו שנה נפלה חומת ברלין?")
     };
 
@@ -47,8 +44,10 @@ public class FirstQuestionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_first_question);
 
-        // ⏱️ התחלת סטופר המשחק
-        GameTimer.getInstance().startStopwatch();
+        // ⏱️ מתחילים טיימר פעם אחת בלבד (ה-Fragment מציג אותו)
+        if (!GameTimer.getInstance().isRunning()) {
+            GameTimer.getInstance().start(5 * 60 * 1000); // 5 דקות
+        }
 
         initViews();
         setupNumberPad();
@@ -90,8 +89,6 @@ public class FirstQuestionActivity extends AppCompatActivity {
 
     // ===== Input =====
     private void addDigit(String digit) {
-        Log.d("FirstQuestionActivity", " -> addDigit "+digit );
-
         if (enteredCode.length() >= puzzles[currentPuzzleIndex].answer.length()) return;
 
         enteredCode.append(digit);
@@ -103,9 +100,7 @@ public class FirstQuestionActivity extends AppCompatActivity {
     }
 
     private void deleteLastDigit() {
-
         if (enteredCode.length() == 0) return;
-
         enteredCode.deleteCharAt(enteredCode.length() - 1);
         codeScreen.setText(enteredCode.toString());
     }
@@ -128,24 +123,10 @@ public class FirstQuestionActivity extends AppCompatActivity {
         currentPuzzleIndex++;
 
         if (currentPuzzleIndex >= puzzles.length) {
-            finishGame();
+            Toast.makeText(this, "🎉 סיימת שלב!", Toast.LENGTH_LONG).show();
+            startActivity(new Intent(this, IranPuzzleActivity.class));
+            finish();
         }
-    }
-
-    private void finishGame() {
-        // ⏱️ עצירת סטופר
-        long scoreMillis = GameTimer.getInstance().stopStopwatch();
-        int scoreSeconds = (int) (scoreMillis / 1000);
-
-        // 🔥 שמירת תוצאה
-        UserService.getInstance().insertScore(
-                new Score(scoreSeconds, "demo_user")
-        );
-
-        Toast.makeText(this, "🎉 סיימת את המשחק!", Toast.LENGTH_LONG).show();
-
-        startActivity(new Intent(this, NextActivity.class));
-        finish();
     }
 
     private void resetInput() {

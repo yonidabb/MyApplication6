@@ -5,14 +5,14 @@ import java.util.UUID;
 
 public class Score {
 
-    private int score;
+    private long score;
     private String user;
     private Date date;
 
     public Score() {
     }
 
-    public Score(int score, String user) {
+    public Score(long score, String user) {
         this.score = score;
         this.user = user;
         gameID = UUID.randomUUID().toString();
@@ -25,19 +25,23 @@ public class Score {
         return date;
     }
 
-    public String getID() {
-        return null;
+//    public String getID() {
+//        return null;
+//    }
+
+    public long getScore() {
+        return score;
     }
 
-    public int getScore() {
-        return score;
+    public long getScoreInSeconds() {
+        return score/1000;
     }
 
     public String getUser() {
         return user;
     }
 
-    public String getGameID() {
+    public String getID() {
         return gameID;
     }
 

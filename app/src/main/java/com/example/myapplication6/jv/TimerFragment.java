@@ -2,6 +2,7 @@ package com.example.myapplication6.jv;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,15 +12,15 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.myapplication6.ActivityTimer;
 import com.example.myapplication6.R;
 import com.example.myapplication6.jv.ScoresActivity;
 
 public class TimerFragment extends Fragment {
 
     private TextView timerText;
-    private CountDownTimer timer;
+    ActivityTimer activityTimer = ActivityTimer.getInstance();
 
-    private long timeLeftMillis = 5 * 60 * 1000; // 5 דקות
 
     @Nullable
     @Override
@@ -30,39 +31,25 @@ public class TimerFragment extends Fragment {
     ) {
         View view = inflater.inflate(R.layout.fragment_timer, container, false);
         timerText = view.findViewById(R.id.timerText);
-        startTimer();
+        activityTimer.setFragment(this);
+        activityTimer.startTimer();
         return view;
     }
 
-    private void startTimer() {
-        timer = new CountDownTimer(timeLeftMillis, 1000) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-                timeLeftMillis = millisUntilFinished;
-                updateUI();
-            }
 
-            @Override
-            public void onFinish() {
-                Intent intent = new Intent(getActivity(), ScoresActivity.class);
-                intent.putExtra("FINAL_SCORE", timeLeftMillis);
-                intent.putExtra("USER_NAME", "demo_user"); // זמני, נחליף בהתחברות
-                startActivity(intent);
-                requireActivity().finish();
-            }
-        }.start();
-    }
 
-    private void updateUI() {
-        long totalSeconds = timeLeftMillis / 1000;
+    public void updateUI() {
+        long totalSeconds = activityTimer.getTimeLeftMillis() / 1000;
         long minutes = totalSeconds / 60;
         long seconds = totalSeconds % 60;
         timerText.setText(String.format("%02d:%02d", minutes, seconds));
+//        Log.d("TimerFragment", " -> game time: "+activityTimer.getGameTime() );
+
     }
 
     private void goToScore() {
         Intent intent = new Intent(getActivity(), ScoresActivity.class);
-        intent.putExtra("FINAL_TIME", timeLeftMillis);
+        intent.putExtra("FINAL_TIME", activityTimer.getTimeLeftMillis());
         startActivity(intent);
         requireActivity().finish();
     }

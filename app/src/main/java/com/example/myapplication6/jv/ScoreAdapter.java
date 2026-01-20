@@ -21,7 +21,9 @@ public class ScoreAdapter extends RecyclerView.Adapter<ScoreAdapter.ScoreVH> {
     public void setItems(List<Score> newItems) {
         items.clear();
         if (newItems != null) items.addAll(newItems);
+
         notifyDataSetChanged();
+
     }
 
     @NonNull
@@ -36,7 +38,7 @@ public class ScoreAdapter extends RecyclerView.Adapter<ScoreAdapter.ScoreVH> {
     public void onBindViewHolder(@NonNull ScoreVH holder, int position) {
         Score s = items.get(position);
         holder.userText.setText(s.getUser());
-        holder.scoreText.setText(s.getScore() + "s");
+        holder.scoreText.setText(s.getScoreInSeconds() + "s");
     }
 
     @Override

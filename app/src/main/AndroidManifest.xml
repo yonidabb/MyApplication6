@@ -13,6 +13,16 @@
         android:theme="@style/Theme.MyApplication6"
         tools:targetApi="31">
         <activity
+            android:name=".jv.AfterLoginActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
             android:name=".jv.DebugActivity"
             android:exported="true" >
             <intent-filter>
@@ -21,6 +31,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".jv.JMainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
         <activity
             android:name=".jv.FirstQuestionActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -32,15 +53,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".jv.AfterLoginActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+
         <activity
             android:name=".item_score"
             android:exported="false" />
@@ -56,15 +70,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".jv.JMainActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
         <activity
             android:name=".jv.LoginActivity"
             android:exported="false" />
@@ -77,6 +83,16 @@
         <service
             android:name=".jv.CountdownService"
             android:exported="false" />
+        <activity
+            android:name=".jv.IranPuzzleActivity"
+            android:screenOrientation="landscape"
+            android:exported="false"
+            android:configChanges="orientation|keyboardHidden|screenSize" />
+        <activity android:name=".jv.IranQuestion1Activity"/>
+        <activity android:name=".jv.IranQuestion2Activity"/>
+        <activity android:name=".jv.IranQuestion3Activity"/>
+        <activity android:name=".jv.IranQuestion4Activity"/>
+        <activity android:name=".jv.IranQuestion5Activity"/>
     </application>
 
 </manifest>

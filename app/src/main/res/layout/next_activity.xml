@@ -2,14 +2,43 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#111">
+    android:background="#111"
+    android:padding="24dp">
 
+    <!-- כותרת -->
     <TextView
+        android:id="@+id/titleText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="חדר 2"
+        android:text="🎉 סיימת את המשחק!"
         android:textSize="32sp"
         android:textColor="#FFFFFF"
-        android:layout_centerInParent="true"/>
+        android:textStyle="bold"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="60dp"/>
+
+    <!-- תת-כותרת -->
+    <TextView
+        android:id="@+id/subTitleText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="חדר 2 הושלם בהצלחה"
+        android:textSize="20sp"
+        android:textColor="#AAAAAA"
+        android:layout_below="@id/titleText"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"/>
+
+    <!-- תוצאה / זמן -->
+    <TextView
+        android:id="@+id/resultText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="⏱ הזמן שנשאר: 00:00"
+        android:textSize="22sp"
+        android:textColor="#00FFAA"
+        android:layout_below="@id/subTitleText"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"/>
 
 </RelativeLayout>

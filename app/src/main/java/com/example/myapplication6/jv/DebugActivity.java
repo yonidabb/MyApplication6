@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.myapplication6.ActivityTimer;
 import com.example.myapplication6.GameTimer;
 import com.example.myapplication6.R;
 import com.example.myapplication6.models.Score;
@@ -28,12 +29,14 @@ public class DebugActivity extends AppCompatActivity {
         Button btnSound = findViewById(R.id.btnTestSound);
         Button btnClear = findViewById(R.id.btnClear);
 
+        ActivityTimer activityTimer = ActivityTimer.getInstance();
+
+
         btnFirebase.setOnClickListener(v ->
                 {
                     log("Sending score ✅");
-                    int scoreSeconds = 100;
                     UserService.getInstance().insertScore(
-                            new Score(scoreSeconds, "demo_user")
+                            new Score(activityTimer.getGameTime(), "yoni")
                     );
 
 
@@ -41,23 +44,18 @@ public class DebugActivity extends AppCompatActivity {
 
         );
 
-        btnTimer.setOnClickListener(v ->{
+        btnTimer.setOnClickListener(v -> {
 
-            GameTimer gameTimer = GameTimer.getInstance();
-            if (gameTimer.isRunning()) {
-                log("stop timer 🔥");
+                    if (activityTimer.isRunning()) {
+                        log("timer time is " + activityTimer.getGameTime());
 
-                gameTimer.stopStopwatch();
-            }else{
-                log("start timer 🔥");
-                gameTimer.startStopwatch();
-            }
+                    } else {
+                        log("start timer 🔥");
+                        activityTimer.startTimer();
+                    }
 
 
-
-
-
-        }
+                }
         );
 
         btnSound.setOnClickListener(v ->

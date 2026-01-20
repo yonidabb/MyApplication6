@@ -2,6 +2,7 @@ package com.example.myapplication6.jv;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -10,9 +11,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.myapplication6.GameTimer;
 import com.example.myapplication6.R;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
+
 public class AfterLoginActivity extends AppCompatActivity {
 
     private TextView statusText;
+    private TextView helloText;
     private Button startButton;
     private Button scoresButton;
 
@@ -24,12 +30,21 @@ public class AfterLoginActivity extends AppCompatActivity {
         statusText = findViewById(R.id.status_text);
         startButton = findViewById(R.id.start_button);
         scoresButton = findViewById(R.id.scores_button);
+        helloText = findViewById(R.id.helloUser);
 
         startButton.setOnClickListener(v -> startCountdown());
 
         scoresButton.setOnClickListener(v ->
                 startActivity(new Intent(this, ScoresActivity.class))
         );
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        Log.d("AfterLoginActivity", " -> user: "+user.getDisplayName() );
+        Log.d("AfterLoginActivity", " -> user: "+user.getEmail() );
+
+        helloText.setText("Hello "+user.getEmail());
+
+
     }
 
     private void startCountdown() {

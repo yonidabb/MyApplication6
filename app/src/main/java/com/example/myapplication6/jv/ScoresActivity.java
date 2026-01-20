@@ -19,8 +19,8 @@ public class ScoresActivity extends AppCompatActivity {
     private final UserService userService = UserService.getInstance();
 
     private RecyclerView userRecycler, globalRecycler;
-    private final List<Score> userScores = new ArrayList<>();
-    private final List<Score> globalScores = new ArrayList<>();
+//    private final List<Score> userScores = new ArrayList<>();
+//    private final List<Score> globalScores = new ArrayList<>();
     private ScoreAdapter userAdapter, globalAdapter;
 
     @Override

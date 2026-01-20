@@ -158,6 +158,7 @@ public class UserService {
                         FirebaseUser user = auth.getCurrentUser();
                         if (user != null) {
                             profile.setUserID(user.getUid());
+                            profile.setName(profile.getName());
                             saveProfile(profile);
                         }
                         Toast.makeText(activity, "Registered successfully", Toast.LENGTH_SHORT).show();
@@ -210,12 +211,14 @@ public class UserService {
 
     public void insertScore(Score score) {
         FirebaseFirestore.getInstance()
-                .collection("scores1")
-                .document(score.getGameID())
+                .collection("scores")
+                .document(score.getID())
                 .set(score)
-                .addOnSuccessListener(a -> Log.d(TAG, "Score saved "+score))
+                .addOnSuccessListener(a -> Log.d(TAG, "Score save "+score.toString()))
                 .addOnFailureListener(e -> Log.e(TAG, "Score error", e));
     }
+
+
 
 
 }
