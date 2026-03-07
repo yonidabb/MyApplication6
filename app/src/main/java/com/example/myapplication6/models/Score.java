@@ -5,43 +5,35 @@ import java.util.UUID;
 
 public class Score {
 
-    private long score;
+    private long score;      // <-- שים לב: זה בשניות
     private String user;
     private Date date;
+    private String gameID;
 
     public Score() {
+        // חובה ל-Firestore
     }
 
     public Score(long score, String user) {
         this.score = score;
         this.user = user;
-        gameID = UUID.randomUUID().toString();
-        date = new Date();
+        this.gameID = UUID.randomUUID().toString();
+        this.date = new Date();
     }
-
-    private String gameID;
-
-    public Date getDate() {
-        return date;
-    }
-
-//    public String getID() {
-//        return null;
-//    }
 
     public long getScore() {
-        return score;
-    }
-
-    public long getScoreInSeconds() {
-        return score/1000;
+        return score; // זה כבר בשניות
     }
 
     public String getUser() {
         return user;
     }
 
-    public String getID() {
+    public Date getDate() {
+        return date;
+    }
+
+    public String getGameID() {
         return gameID;
     }
 

@@ -18,6 +18,7 @@ public class FirstQuestionActivity extends AppCompatActivity {
 
     // ===== Logic =====
     private final StringBuilder enteredCode = new StringBuilder();
+    private TextView progressText;
     private int currentPuzzleIndex = 0;
 
     // ===== Puzzle Model =====
@@ -52,11 +53,14 @@ public class FirstQuestionActivity extends AppCompatActivity {
         initViews();
         setupNumberPad();
 
-        puzzleButton.setOnClickListener(v -> showCurrentQuestion());
+        // מציג ישר את החידה הראשונה על המסך (בלי Toast)
+        showCurrentQuestion();
+        updateProgressText();
     }
 
     // ===== Init =====
     private void initViews() {
+        progressText = findViewById(R.id.progressText);
         codeScreen = findViewById(R.id.codeScreen);
         puzzleButton = findViewById(R.id.puzzleButton);
 
@@ -71,6 +75,11 @@ public class FirstQuestionActivity extends AppCompatActivity {
         num8 = findViewById(R.id.num8);
         num9 = findViewById(R.id.num9);
         deleteBtn = findViewById(R.id.deleteBtn);
+    }
+
+    private void updateProgressText() {
+        int globalIndex = currentPuzzleIndex + 1; // כאן זה 1..4
+        progressText.setText("חידה " + globalIndex + " מתוך 10");
     }
 
     private void setupNumberPad() {
@@ -126,6 +135,10 @@ public class FirstQuestionActivity extends AppCompatActivity {
             Toast.makeText(this, "🎉 סיימת שלב!", Toast.LENGTH_LONG).show();
             startActivity(new Intent(this, IranPuzzleActivity.class));
             finish();
+        } else {
+            // מציג את החידה הבאה על המסך
+            showCurrentQuestion();
+            updateProgressText();
         }
     }
 
@@ -134,7 +147,11 @@ public class FirstQuestionActivity extends AppCompatActivity {
         codeScreen.setText("");
     }
 
+    // ===== Question on screen (NOT Toast) =====
     private void showCurrentQuestion() {
-        Toast.makeText(this, puzzles[currentPuzzleIndex].question, Toast.LENGTH_LONG).show();
+        puzzleButton.animate().alpha(0f).setDuration(120).withEndAction(() -> {
+            puzzleButton.setText("🧩 " + puzzles[currentPuzzleIndex].question);
+            puzzleButton.animate().alpha(1f).setDuration(180).start();
+        }).start();
     }
 }

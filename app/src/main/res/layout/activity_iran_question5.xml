@@ -1,34 +1,113 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="24dp">
+    android:background="@drawable/bg_iran_gradient"
+    android:padding="18dp">
 
+    <!-- רקע עדין/תמונה אם יש לך -->
+    <ImageView
+        android:id="@+id/bgImage"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:alpha="0.85"
+        android:scaleType="centerCrop"
+        android:src="@drawable/the_bad_haman"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- טיימר "פיל" -->
     <TextView
         android:id="@+id/timerText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Time: 00:00"
-        android:textSize="18sp"
-        android:layout_marginBottom="20dp"/>
-    <TextView
-        android:id="@+id/questionText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="מי היה האיש שרצה להשמיד את היהודים באיראן בעבר?"
-        android:textSize="20sp"/>
+        android:background="@drawable/bg_timer_pill"
+        android:paddingHorizontal="14dp"
+        android:paddingVertical="8dp"
+        android:text="⏱ 00:00"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/white"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
-    <EditText
-        android:id="@+id/answerInput"
-        android:layout_width="match_parent"
+    <!-- כרטיס זכוכית -->
+    <LinearLayout
+        android:id="@+id/glassCard"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="הכנס תשובה"/>
+        android:background="@drawable/bg_glass_card"
+        android:orientation="vertical"
+        android:padding="18dp"
+        app:layout_constraintTop_toBottomOf="@id/timerText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0.42">
 
-    <Button
-        android:id="@+id/submitButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="בדוק"/>
+        <TextView
+            android:id="@+id/titleText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="חידה 10 מתוך 10"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:layout_marginBottom="10dp" />
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/questionText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="מי היה האיש שרצה להשמיד את היהודים באיראן בעבר?"
+            android:textColor="@android:color/white"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="14dp" />
+
+        <EditText
+            android:id="@+id/answerInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="כתוב באנגלית…"
+            android:inputType="textPersonName"
+            android:padding="14dp"
+            android:textColor="@android:color/white"
+            android:textColorHint="#BFFFFFFF"
+            android:background="@drawable/bg_input_dark"
+            android:layout_marginBottom="14dp" />
+
+        <TextView
+            android:id="@+id/feedbackText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textSize="14sp"
+            android:textColor="#CCFFFFFF"
+            android:layout_marginBottom="12dp" />
+
+        <Button
+            android:id="@+id/submitButton"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:text="בדוק"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:background="@drawable/btn_primary"
+            android:textColor="@android:color/white" />
+
+        <TextView
+            android:id="@+id/hintText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="טיפ: זה קשור לפורים 😉"
+            android:textColor="#AAFFFFFF"
+            android:textSize="13sp"
+            android:layout_marginTop="12dp" />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

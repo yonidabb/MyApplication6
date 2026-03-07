@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Background image -->
+    <item>
+        <bitmap
+            android:src="@drawable/iran_room"
+            android:gravity="center" />
+    </item>
+
+    <!-- Dark overlay for readability -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#99000000" />
+        </shape>
+    </item>
+
+</layer-list>

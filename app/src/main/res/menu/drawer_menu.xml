@@ -1,0 +1,23 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/nav_start"
+        android:title="🚀 Start Game" />
+
+    <item
+        android:id="@+id/nav_scores"
+        android:title="🏆 Scores" />
+
+    <item
+        android:id="@+id/nav_ai"
+        android:title="🧠 Start AI" />
+
+    <item
+        android:id="@+id/nav_logout"
+        android:title="🚪 Log out" />
+
+    <item
+        android:id="@+id/nav_exit"
+        android:title="❌ Exit Game" />
+
+</menu>

@@ -6,78 +6,149 @@
     android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#111111"
+    android:background="@drawable/bg_app_dark"
     tools:context=".jv.IranPuzzleActivity">
 
-    <!-- TIMER -->
+    <!-- HERO height = % of screen (works in landscape too) -->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/heroGuide"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.55"/>
+
+    <ImageView
+        android:id="@+id/heroImage"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/escape_room_hero"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/heroGuide"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <View
+        android:id="@+id/heroScrim"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/bg_hero_scrim"
+        app:layout_constraintTop_toTopOf="@id/heroImage"
+        app:layout_constraintBottom_toBottomOf="@id/heroImage"
+        app:layout_constraintStart_toStartOf="@id/heroImage"
+        app:layout_constraintEnd_toEndOf="@id/heroImage"/>
+
+    <!-- TIMER (kept) -->
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/timerFragment"
         android:name="com.example.myapplication6.jv.TimerFragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="14dp"
+        android:layout_marginStart="14dp"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintStart_toStartOf="parent" />
 
-    <!-- TITLE -->
+    <!-- Title on hero -->
     <TextView
         android:id="@+id/titleText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="איראן - חידה 1"
-        android:textSize="24sp"
+        android:text="חידה 5 מתוך 10"
+        android:textSize="26sp"
         android:textStyle="bold"
         android:textColor="@android:color/white"
-        android:gravity="center"
-        android:layout_marginTop="24dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        app:layout_constraintTop_toBottomOf="@id/timerFragment"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/heroImage"
+        android:layout_marginBottom="42dp"/>
 
-    <!-- PUZZLE TEXT -->
     <TextView
         android:id="@+id/puzzleText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="מהי בירת איראן?"
-        android:textSize="20sp"
-        android:textColor="@android:color/white"
-        android:gravity="center"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
+        android:textSize="15sp"
+        android:textColor="#E6FFFFFF"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/titleText"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        android:layout_marginTop="6dp"/>
 
-    <!-- INPUT -->
-    <EditText
-        android:id="@+id/answerInput"
+    <!-- CONTENT AREA (always visible, scroll if needed) -->
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/contentScroll"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:hint="הקלד תשובה כאן"
-        android:inputType="text"
-        android:padding="12dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="48dp"
-        android:layout_marginEnd="48dp"
-        android:background="@android:drawable/edit_text"
-        app:layout_constraintTop_toBottomOf="@id/puzzleText"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        android:clipToPadding="false"
+        android:paddingBottom="16dp"
+        android:scrollbars="vertical"
+        app:layout_constraintTop_toBottomOf="@id/heroGuide"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent">
 
-    <!-- BUTTON -->
-    <Button
-        android:id="@+id/checkBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="בדוק"
-        android:layout_marginTop="16dp"
-        app:layout_constraintTop_toBottomOf="@id/answerInput"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        <LinearLayout
+            android:id="@+id/puzzleCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:background="@drawable/bg_glass_card"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="-18dp">
+
+            <TextView
+                android:id="@+id/miniLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="הכנס תשובה"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:textColor="#BFFFFFFF"/>
+
+            <EditText
+                android:id="@+id/answerInput"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:layout_marginTop="10dp"
+                android:hint="הקלד עיר למשל: paris"
+                android:inputType="text"
+                android:paddingStart="14dp"
+                android:paddingEnd="14dp"
+                android:gravity="center_vertical"
+                android:textColor="@android:color/white"
+                android:textColorHint="#80FFFFFF"
+                android:background="@drawable/bg_input"/>
+
+            <Button
+                android:id="@+id/checkBtn"
+                android:layout_width="match_parent"
+                android:layout_height="54dp"
+                android:layout_marginTop="12dp"
+                android:text="בדוק"
+                android:textAllCaps="false"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:textColor="@android:color/white"
+                android:background="@drawable/bg_primary_button"/>
+
+            <TextView
+                android:id="@+id/hintText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="טיפ: תחשוב על העיר הכי מוכרת שם 😉"
+                android:textSize="12sp"
+                android:textColor="#BFFFFFFF"/>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

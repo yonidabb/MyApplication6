@@ -1,7 +1,6 @@
 package com.example.myapplication6;
 
-import android.os.Handler;
-import android.os.Looper;
+import android.os.CountDownTimer;
 import android.os.SystemClock;
 
 public class GameTimer {
@@ -18,11 +17,12 @@ public class GameTimer {
 
     private GameTimer() {}
 
-    // -------- Timer Core --------
-    private final Handler handler = new Handler(Looper.getMainLooper());
-    private Runnable runnable;
+    // -------- Timer Core (CountDownTimer) --------
+    private static final long TICK_INTERVAL = 1000;
 
-    private long endTimeMillis;     // absolute end time
+    private CountDownTimer countDownTimer;
+
+    private long endTimeMillis;     // absolute end time (for pause precision)
     private long timeLeftMillis;    // cached remaining time
     private boolean isRunning = false;
 
@@ -39,8 +39,6 @@ public class GameTimer {
     }
 
     // -------- Public API --------
-
-
     public boolean isRunning() {
         return isRunning;
     }
@@ -48,44 +46,61 @@ public class GameTimer {
     public void start(long durationMillis) {
         if (isRunning) return;
 
+        stopInternal(); // safety
+        timeLeftMillis = durationMillis;
         endTimeMillis = SystemClock.elapsedRealtime() + durationMillis;
         isRunning = true;
 
-        runnable = new Runnable() {
+        countDownTimer = new CountDownTimer(durationMillis, TICK_INTERVAL) {
             @Override
-            public void run() {
-                long now = SystemClock.elapsedRealtime();
-                timeLeftMillis = endTimeMillis - now;
-
-                if (timeLeftMillis <= 0) {
-                    timeLeftMillis = 0;
-                    stopInternal();
-                    if (listener != null) listener.onFinish();
-                    return;
-                }
-
+            public void onTick(long millisUntilFinished) {
+                timeLeftMillis = millisUntilFinished;
                 if (listener != null) listener.onTick(timeLeftMillis);
-
-                handler.postDelayed(this, 1000);
             }
-        };
 
-        handler.post(runnable);
+            @Override
+            public void onFinish() {
+                timeLeftMillis = 0;
+                isRunning = false;
+                countDownTimer = null;
+                if (listener != null) listener.onFinish();
+            }
+        }.start();
     }
 
     public void pause() {
         if (!isRunning) return;
 
-        timeLeftMillis = endTimeMillis - SystemClock.elapsedRealtime();
+        // try to be precise using endTimeMillis
+        long now = SystemClock.elapsedRealtime();
+        timeLeftMillis = endTimeMillis - now;
+        if (timeLeftMillis < 0) timeLeftMillis = 0;
+
         stopInternal();
     }
 
     public void resume() {
         if (isRunning || timeLeftMillis <= 0) return;
 
-        endTimeMillis = SystemClock.elapsedRealtime() + timeLeftMillis;
+        long durationMillis = timeLeftMillis;
+        endTimeMillis = SystemClock.elapsedRealtime() + durationMillis;
         isRunning = true;
-        handler.post(runnable);
+
+        countDownTimer = new CountDownTimer(durationMillis, TICK_INTERVAL) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                timeLeftMillis = millisUntilFinished;
+                if (listener != null) listener.onTick(timeLeftMillis);
+            }
+
+            @Override
+            public void onFinish() {
+                timeLeftMillis = 0;
+                isRunning = false;
+                countDownTimer = null;
+                if (listener != null) listener.onFinish();
+            }
+        }.start();
     }
 
     public void stop() {
@@ -93,16 +108,20 @@ public class GameTimer {
         stopInternal();
     }
 
+    // (שם לא משהו אבל משאיר כדי שלא ישבור לך קריאות קיימות)
     public long getElaspeTime() {
         if (isRunning) {
-            timeLeftMillis = endTimeMillis - SystemClock.elapsedRealtime();
+            long now = SystemClock.elapsedRealtime();
+            timeLeftMillis = endTimeMillis - now;
             if (timeLeftMillis < 0) timeLeftMillis = 0;
         }
         return timeLeftMillis;
     }
+
     public long getTimeLeftMillis() {
         if (isRunning) {
-            timeLeftMillis = endTimeMillis - SystemClock.elapsedRealtime();
+            long now = SystemClock.elapsedRealtime();
+            timeLeftMillis = endTimeMillis - now;
             if (timeLeftMillis < 0) timeLeftMillis = 0;
         }
         return timeLeftMillis;
@@ -111,9 +130,13 @@ public class GameTimer {
     // -------- Internal --------
     private void stopInternal() {
         isRunning = false;
-        handler.removeCallbacks(runnable);
+        if (countDownTimer != null) {
+            countDownTimer.cancel();
+            countDownTimer = null;
+        }
     }
-    // ===== Countdown API =====
+
+    // ===== Countdown API (CountDownTimer) =====
     public interface CountdownTick {
         void onTick(long millisLeft);
     }
@@ -122,55 +145,46 @@ public class GameTimer {
         void onFinish();
     }
 
-    public void startCountdown(
-            long durationMillis,
-            CountdownTick tick,
-            CountdownFinish finish
-    ) {
+    public void startCountdown(long durationMillis, CountdownTick tick, CountdownFinish finish) {
         stopInternal();
 
+        timeLeftMillis = durationMillis;
         endTimeMillis = SystemClock.elapsedRealtime() + durationMillis;
         isRunning = true;
 
-        runnable = new Runnable() {
+        countDownTimer = new CountDownTimer(durationMillis, TICK_INTERVAL) {
             @Override
-            public void run() {
-                long now = SystemClock.elapsedRealtime();
-                timeLeftMillis = endTimeMillis - now;
-
-                if (timeLeftMillis <= 0) {
-                    isRunning = false;
-                    handler.removeCallbacks(this);
-                    finish.onFinish();
-                    return;
-                }
-
+            public void onTick(long millisUntilFinished) {
+                timeLeftMillis = millisUntilFinished;
                 tick.onTick(timeLeftMillis);
-                handler.postDelayed(this, 1000);
             }
-        };
 
-        handler.post(runnable);
-    }
-    // ===== Stopwatch =====
-    public void startStopwatch() {
-        stopInternal();
-        isRunning = true;
-        endTimeMillis = SystemClock.elapsedRealtime();
-
-        runnable = new Runnable() {
             @Override
-            public void run() {
-                timeLeftMillis = SystemClock.elapsedRealtime() - endTimeMillis;
-                handler.postDelayed(this, 1000);
+            public void onFinish() {
+                timeLeftMillis = 0;
+                isRunning = false;
+                countDownTimer = null;
+                finish.onFinish();
             }
-        };
+        }.start();
+    }
 
-        handler.post(runnable);
+    // ===== Stopwatch =====
+    // CountDownTimer לא מתאים לסטופר (סופר למטה). לכן נשאיר סטופר על בסיס SystemClock בלי "טיימר" רץ.
+    private boolean stopwatchRunning = false;
+    private long stopwatchStartMillis;
+    private long stopwatchAccumulatedMillis;
+
+    public void startStopwatch() {
+        stopwatchRunning = true;
+        stopwatchStartMillis = SystemClock.elapsedRealtime();
+        stopwatchAccumulatedMillis = 0;
     }
 
     public long stopStopwatch() {
-        stopInternal();
-        return timeLeftMillis;
+        if (!stopwatchRunning) return stopwatchAccumulatedMillis;
+        stopwatchAccumulatedMillis = SystemClock.elapsedRealtime() - stopwatchStartMillis;
+        stopwatchRunning = false;
+        return stopwatchAccumulatedMillis;
     }
 }

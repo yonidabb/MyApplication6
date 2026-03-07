@@ -3,6 +3,7 @@ package com.example.myapplication6;
 import android.content.Intent;
 import android.os.CountDownTimer;
 import android.os.SystemClock;
+import com.example.myapplication6.jv.AfterLoginActivity;
 
 import androidx.fragment.app.Fragment;
 
@@ -76,9 +77,8 @@ public class ActivityTimer {
                 isRunning = false;
 
                 if (fragment != null && fragment.isAdded() && fragment.getActivity() != null) {
-                    Intent intent = new Intent(fragment.getActivity(), NextActivity.class);
-                    intent.putExtra("FINAL_SCORE", timeLeftMillis);
-                    intent.putExtra("USER_NAME", "demo_user");
+                    Intent intent = new Intent(fragment.getActivity(), AfterLoginActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     fragment.startActivity(intent);
                     fragment.getActivity().finish();
                 }

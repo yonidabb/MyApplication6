@@ -1,0 +1,1 @@
+/data/data/com.example.myapplication6/shared_prefs/app_prefs.xml

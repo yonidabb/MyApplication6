@@ -7,4 +7,18 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!-- Kahoot-like answer colors -->
+    <color name="exam_red">#E53935</color>
+    <color name="exam_red_pressed">#C62828</color>
+
+    <color name="exam_blue">#1E88E5</color>
+    <color name="exam_blue_pressed">#1565C0</color>
+
+    <color name="exam_yellow">#FDD835</color>
+    <color name="exam_yellow_pressed">#F9A825</color>
+
+    <color name="exam_green">#43A047</color>
+    <color name="exam_green_pressed">#2E7D32</color>
+
 </resources>

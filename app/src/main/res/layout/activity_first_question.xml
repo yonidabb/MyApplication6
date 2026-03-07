@@ -4,8 +4,6 @@
     android:layout_height="match_parent"
     android:background="@drawable/escape_room_red">
 
-    <!-- כפתור "חידה" -->
-
     <fragment
         android:id="@+id/timerFragment"
         android:name="com.example.myapplication6.jv.TimerFragment"
@@ -14,26 +12,53 @@
         android:layout_marginTop="60dp" />
 
     <TextView
-        android:id="@+id/puzzleButton"
-        android:layout_width="80dp"
-        android:layout_height="32dp"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="190dp"
-        android:layout_marginRight="270dp"
-        android:background="@android:color/transparent"
-        android:clickable="true"
-        android:focusable="true"
-        android:gravity="center"
-        android:shadowColor="#FF0000"
+        android:id="@+id/progressText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="18dp"
+        android:paddingLeft="14dp"
+        android:paddingRight="14dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:text="חידה 1 מתוך 10"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:letterSpacing="0.08"
+        android:shadowColor="#FF3A3A"
         android:shadowDx="0"
         android:shadowDy="0"
         android:shadowRadius="18"
-        android:text="חידה"
-        android:textColor="#FFFFFF"
-        android:textSize="18sp"
-        android:textStyle="bold" />
+        android:background="@drawable/bg_question_neon" />
 
-    <!-- מסך קוד (המסך השחור) -->
+    <!-- טקסט החידה (במקום Toast + במקום "חידה") -->
+    <TextView
+        android:id="@+id/puzzleButton"
+        android:layout_width="320dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="190dp"
+        android:layout_marginRight="170dp"
+        android:translationX="-15dp"
+        android:padding="16dp"
+        android:gravity="center"
+        android:background="@drawable/bg_question_neon"
+        android:text="טוען חידה..."
+        android:textColor="#FFFFFF"
+        android:textSize="19sp"
+        android:textStyle="bold"
+        android:letterSpacing="0.05"
+        android:shadowColor="#FF3A3A"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="22"
+        android:lineSpacingExtra="4dp"
+        android:clickable="false"
+        android:focusable="false" />
+
+    <!-- מסך הקוד -->
     <TextView
         android:id="@+id/codeScreen"
         android:layout_width="200dp"
@@ -46,7 +71,7 @@
         android:gravity="center"
         android:textStyle="bold" />
 
-    <!-- לוח מקשים Enter Code -->
+    <!-- לוח מקשים -->
     <TableLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

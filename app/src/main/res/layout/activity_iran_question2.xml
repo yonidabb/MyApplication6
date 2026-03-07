@@ -1,34 +1,140 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="24dp">
+    android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/timerText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Time: 00:00"
-        android:textSize="18sp"
-        android:layout_marginBottom="20dp"/>
-    <TextView
-        android:id="@+id/questionText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="מה שם המנהיג העליון של איראן?"
-        android:textSize="20sp"/>
-
-    <EditText
-        android:id="@+id/answerInput"
+    <!-- רקע: התמונה שלך -->
+    <ImageView
+        android:id="@+id/bg"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="הכנס תשובה"/>
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/bg_iran_supreme_leader" />
 
-    <Button
-        android:id="@+id/submitButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="בדוק"/>
+    <!-- שכבת כהות לקריאות -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#99000000" />
 
-</LinearLayout>
+    <!-- תוכן -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <!-- טיימר -->
+        <TextView
+            android:id="@+id/timerText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="⏱ 00:00"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/white"
+            android:padding="10dp"
+            android:background="#33000000"
+            android:layout_marginBottom="14dp" />
+
+        <TextView
+            android:id="@+id/progressText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="חידה 7 מתוך 10"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/white"
+            android:layout_marginBottom="12dp"
+            android:padding="8dp"
+            android:background="#22000000"/>
+
+        <ScrollView
+            android:id="@+id/cardScroll"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:fillViewport="true"
+            android:overScrollMode="never">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="18dp"
+                app:cardUseCompatPadding="true"
+                app:cardBackgroundColor="#22FFFFFF">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:id="@+id/questionText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="מה שם המנהיג העליון של איראן?"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:textColor="@android:color/white"
+                        android:layout_marginBottom="12dp" />
+
+                    <Button
+                        android:id="@+id/answer1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="מחמוד אחמדינז׳אד"
+                        android:textAllCaps="false"
+                        android:layout_marginBottom="10dp"
+                        android:backgroundTint="#2AFFFFFF"
+                        android:textColor="@android:color/white" />
+
+                    <Button
+                        android:id="@+id/answer2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="עלי חמינאי"
+                        android:textAllCaps="false"
+                        android:layout_marginBottom="10dp"
+                        android:backgroundTint="#2AFFFFFF"
+                        android:textColor="@android:color/white" />
+
+                    <Button
+                        android:id="@+id/answer3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="רוחאני"
+                        android:textAllCaps="false"
+                        android:layout_marginBottom="10dp"
+                        android:backgroundTint="#2AFFFFFF"
+                        android:textColor="@android:color/white" />
+
+                    <Button
+                        android:id="@+id/answer4"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="קאסם סולימאני"
+                        android:textAllCaps="false"
+                        android:layout_marginBottom="14dp"
+                        android:backgroundTint="#2AFFFFFF"
+                        android:textColor="@android:color/white" />
+
+                    <Button
+                        android:id="@+id/nextButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="המשך"
+                        android:textAllCaps="false"
+                        android:backgroundTint="#00C853"
+                        android:textColor="@android:color/white" />
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+        </ScrollView>
+
+    </LinearLayout>
+
+</FrameLayout>

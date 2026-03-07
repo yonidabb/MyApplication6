@@ -43,10 +43,11 @@ public class IranQuestion4Activity extends AppCompatActivity {
                 );
             }
 
+
             @Override
             public void onFinish() {
-                startActivity(new Intent(IranQuestion4Activity.this, NextActivity.class));
-                finish();
+                // לא עושים כלום פה!
+                // timeout מנוהל ע"י ActivityTimer (5 דקות) דרך TimerFragment
             }
         });
     }
