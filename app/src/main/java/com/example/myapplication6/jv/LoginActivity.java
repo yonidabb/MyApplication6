@@ -27,7 +27,6 @@ public class LoginActivity extends AppCompatActivity {
         loginButton = findViewById(R.id.loginButton);
         forgetPassButton = findViewById(R.id.forgetPassButton);
 
-        // Disabled until valid email
         forgetPassButton.setEnabled(false);
 
         emailInput.addTextChangedListener(new android.text.TextWatcher() {
@@ -41,7 +40,6 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         loginButton.setOnClickListener(v -> attemptLogin());
-
         forgetPassButton.setOnClickListener(v -> resetPassword());
     }
 
@@ -59,7 +57,6 @@ public class LoginActivity extends AppCompatActivity {
                 email,
                 password,
                 () -> {
-                    // ✅ מעבר למסך הבא קורה כאן
                     startActivity(new Intent(this, AfterLoginActivity.class));
                     finish();
                 }

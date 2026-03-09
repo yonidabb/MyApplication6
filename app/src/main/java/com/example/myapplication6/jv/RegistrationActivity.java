@@ -2,7 +2,6 @@ package com.example.myapplication6.jv;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -11,8 +10,12 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myapplication6.R;
+import com.example.myapplication6.models.CountryItem;
 import com.example.myapplication6.models.UserProfile;
 import com.example.myapplication6.models.UserService;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class RegistrationActivity extends AppCompatActivity {
 
@@ -33,22 +36,75 @@ public class RegistrationActivity extends AppCompatActivity {
         confirmPasswordInput = findViewById(R.id.confirmPasswordInput);
         registerButton = findViewById(R.id.registerButton);
 
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
-                this,
-                R.array.countries_array,
-                android.R.layout.simple_spinner_item
-        );
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        stateSpinner.setAdapter(adapter);
+        setupCountrySpinner();
 
         registerButton.setOnClickListener(v -> attemptRegister());
+    }
+
+    private void setupCountrySpinner() {
+        List<CountryItem> countries = new ArrayList<>();
+        countries.add(new CountryItem("Israel", "🇮🇱"));
+        countries.add(new CountryItem("United States", "🇺🇸"));
+        countries.add(new CountryItem("United Kingdom", "🇬🇧"));
+        countries.add(new CountryItem("France", "🇫🇷"));
+        countries.add(new CountryItem("Germany", "🇩🇪"));
+        countries.add(new CountryItem("Italy", "🇮🇹"));
+        countries.add(new CountryItem("Spain", "🇪🇸"));
+        countries.add(new CountryItem("Portugal", "🇵🇹"));
+        countries.add(new CountryItem("Greece", "🇬🇷"));
+        countries.add(new CountryItem("Cyprus", "🇨🇾"));
+        countries.add(new CountryItem("Canada", "🇨🇦"));
+        countries.add(new CountryItem("Australia", "🇦🇺"));
+        countries.add(new CountryItem("Brazil", "🇧🇷"));
+        countries.add(new CountryItem("Argentina", "🇦🇷"));
+        countries.add(new CountryItem("Mexico", "🇲🇽"));
+        countries.add(new CountryItem("India", "🇮🇳"));
+        countries.add(new CountryItem("China", "🇨🇳"));
+        countries.add(new CountryItem("Japan", "🇯🇵"));
+        countries.add(new CountryItem("South Korea", "🇰🇷"));
+        countries.add(new CountryItem("Thailand", "🇹🇭"));
+        countries.add(new CountryItem("South Africa", "🇿🇦"));
+        countries.add(new CountryItem("Egypt", "🇪🇬"));
+        countries.add(new CountryItem("Morocco", "🇲🇦"));
+        countries.add(new CountryItem("Turkey", "🇹🇷"));
+        countries.add(new CountryItem("Russia", "🇷🇺"));
+        countries.add(new CountryItem("Ukraine", "🇺🇦"));
+        countries.add(new CountryItem("Sweden", "🇸🇪"));
+        countries.add(new CountryItem("Norway", "🇳🇴"));
+        countries.add(new CountryItem("Denmark", "🇩🇰"));
+        countries.add(new CountryItem("Finland", "🇫🇮"));
+        countries.add(new CountryItem("Poland", "🇵🇱"));
+        countries.add(new CountryItem("Netherlands", "🇳🇱"));
+        countries.add(new CountryItem("Belgium", "🇧🇪"));
+        countries.add(new CountryItem("Switzerland", "🇨🇭"));
+        countries.add(new CountryItem("Austria", "🇦🇹"));
+        countries.add(new CountryItem("Hungary", "🇭🇺"));
+        countries.add(new CountryItem("Czech Republic", "🇨🇿"));
+        countries.add(new CountryItem("Romania", "🇷🇴"));
+        countries.add(new CountryItem("Bulgaria", "🇧🇬"));
+        countries.add(new CountryItem("Croatia", "🇭🇷"));
+        countries.add(new CountryItem("Serbia", "🇷🇸"));
+        countries.add(new CountryItem("Slovenia", "🇸🇮"));
+        countries.add(new CountryItem("Singapore", "🇸🇬"));
+        countries.add(new CountryItem("Philippines", "🇵🇭"));
+        countries.add(new CountryItem("Vietnam", "🇻🇳"));
+        countries.add(new CountryItem("Indonesia", "🇮🇩"));
+        countries.add(new CountryItem("Malaysia", "🇲🇾"));
+        countries.add(new CountryItem("New Zealand", "🇳🇿"));
+        countries.add(new CountryItem("United Arab Emirates", "🇦🇪"));
+        countries.add(new CountryItem("Qatar", "🇶🇦"));
+        countries.add(new CountryItem("Saudi Arabia", "🇸🇦"));
+
+        CountryAdapter adapter = new CountryAdapter(this, countries);
+        stateSpinner.setAdapter(adapter);
     }
 
     private void attemptRegister() {
         String name = nameInput.getText().toString().trim();
         String email = emailInput.getText().toString().trim();
         String ageStr = ageInput.getText().toString().trim();
-        String state = stateSpinner.getSelectedItem().toString();
+        CountryItem selectedCountry = (CountryItem) stateSpinner.getSelectedItem();
+        String state = selectedCountry != null ? selectedCountry.getName() : "";
         String password = passwordInput.getText().toString();
         String confirmPassword = confirmPasswordInput.getText().toString();
 
@@ -84,7 +140,6 @@ public class RegistrationActivity extends AppCompatActivity {
                 password
         );
 
-        // ✅ שימוש נכון ב־UserService החדש
         UserService.getInstance().registerUser(
                 this,
                 profile,
@@ -96,7 +151,6 @@ public class RegistrationActivity extends AppCompatActivity {
         );
     }
 
-    // ===== Validation =====
     private boolean isValidName(String name) {
         if (name == null || name.length() < 2) return false;
 

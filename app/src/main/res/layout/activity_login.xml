@@ -2,74 +2,156 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="24dp">
+    android:fillViewport="true"
+    android:background="#08111F">
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:gravity="center_horizontal"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/titleText"
-            android:text="Hello there!!!"
-            android:textSize="30sp"
-            android:textStyle="bold"
-            android:fontFamily="monospace"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center" />
-
-        <TextView
-            android:id="@+id/subTitleText"
-            android:text="login now"
-            android:textSize="22sp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_marginTop="8dp"/>
-
         <ImageView
-            android:id="@+id/logoImage"
-            android:src="@drawable/logo"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:scaleType="fitCenter"
-            android:layout_marginTop="20dp"/>
+            android:layout_height="match_parent"
+            android:alpha="0.14"
+            android:scaleType="centerCrop"
+            android:src="@drawable/bg_iran_gradient" />
 
-        <EditText
-            android:id="@+id/emailInput"
+        <View
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:hint="Email address"
-            android:inputType="textEmailAddress"
-            android:minHeight="48dp" />
+            android:layout_height="match_parent"
+            android:background="#D908111F" />
 
-        <EditText
-            android:id="@+id/passwordInput"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:hint="Password"
-            android:inputType="textPassword"
-            android:minHeight="48dp" />
+            android:orientation="vertical"
+            android:padding="28dp"
+            android:gravity="center_horizontal">
 
-        <Button
-            android:id="@+id/loginButton"
-            android:text="Login"
-            android:textSize="26sp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"/>
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="28dp" />
 
-        <Button
-            android:id="@+id/forgetPassButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Forgot your password?"
+            <TextView
+                android:id="@+id/titleText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="WELCOME BACK"
+                android:textAllCaps="true"
+                android:textColor="#FFFFFF"
+                android:textSize="30sp"
+                android:textStyle="bold" />
 
-            />
+            <TextView
+                android:id="@+id/subTitleText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:gravity="center"
+                android:text="Log in and continue your mission"
+                android:textColor="#B7C7D9"
+                android:textSize="17sp" />
 
-    </LinearLayout>
+            <ImageView
+                android:id="@+id/logoImage"
+                android:layout_width="180dp"
+                android:layout_height="180dp"
+                android:layout_marginTop="22dp"
+                android:adjustViewBounds="true"
+                android:background="@drawable/circle_background"
+                android:padding="8dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/logo" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="26dp"
+                android:background="#182334"
+                android:orientation="vertical"
+                android:padding="18dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Account Access"
+                    android:textColor="#FFFFFF"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="Enter your details to continue"
+                    android:textColor="#8FA3B8"
+                    android:textSize="13sp" />
+
+                <EditText
+                    android:id="@+id/emailInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:layout_marginTop="18dp"
+                    android:backgroundTint="#D8B26A"
+                    android:hint="Email address"
+                    android:inputType="textEmailAddress"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    android:textColor="#FFFFFF"
+                    android:textColorHint="#8FA3B8" />
+
+                <EditText
+                    android:id="@+id/passwordInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:layout_marginTop="16dp"
+                    android:backgroundTint="#D8B26A"
+                    android:hint="Password"
+                    android:inputType="textPassword"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    android:textColor="#FFFFFF"
+                    android:textColorHint="#8FA3B8" />
+
+                <Button
+                    android:id="@+id/loginButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:layout_marginTop="22dp"
+                    android:backgroundTint="#D8B26A"
+                    android:text="LOGIN"
+                    android:textAllCaps="false"
+                    android:textColor="#08111F"
+                    android:textSize="19sp"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/forgetPassButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:layout_marginTop="12dp"
+                    android:backgroundTint="#24344A"
+                    android:text="Forgot your password?"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="15sp" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:alpha="0.9"
+                android:text="Every second counts."
+                android:textColor="#6F849B"
+                android:textSize="13sp" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="24dp" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
 </ScrollView>

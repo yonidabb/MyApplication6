@@ -34,9 +34,8 @@ public class ScoresActivity extends AppCompatActivity {
         userAdapter = new ScoreAdapter();
         globalAdapter = new ScoreAdapter();
 
-        // ✅ בדיוק מה שרצית:
-        userAdapter.setShowUser(false);   // Your Scores - בלי UID
-        globalAdapter.setShowUser(true);  // Global - כן להציג
+        userAdapter.setShowUser(false);
+        globalAdapter.setShowUser(true);
 
         userRecycler.setAdapter(userAdapter);
         globalRecycler.setAdapter(globalAdapter);

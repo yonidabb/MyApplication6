@@ -2,82 +2,198 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="12dp">
+    android:fillViewport="true"
+    android:background="#08111F">
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:gravity="center_horizontal"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <!-- רקע -->
         <ImageView
-            android:id="@+id/logoImage"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:alpha="0.14"
             android:scaleType="centerCrop"
-            android:src="@drawable/logo"
-            android:layout_marginBottom="12dp"
-            android:background="@drawable/circle_background" />
+            android:src="@drawable/bg_iran_gradient" />
 
-        <TextView
-            android:id="@+id/titleText"
-            android:text="Create your account"
-            android:textSize="30sp"
-            android:layout_marginBottom="12dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <EditText
-            android:id="@+id/nameInput"
-            android:hint="Name"
+        <!-- שכבת כהות -->
+        <View
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="match_parent"
+            android:background="#D908111F" />
 
-        <EditText
-            android:id="@+id/emailInput"
-            android:hint="Email"
-            android:inputType="textEmailAddress"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <EditText
-            android:id="@+id/ageInput"
-            android:hint="Age"
-            android:inputType="number"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <!-- Spinner לרשימת הארצות -->
-        <Spinner
-            android:id="@+id/stateSpinner"
+        <!-- תוכן -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:padding="8dp" />
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:padding="28dp">
 
-        <EditText
-            android:id="@+id/passwordInput"
-            android:hint="Password"
-            android:inputType="textPassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="24dp" />
 
-        <EditText
-            android:id="@+id/confirmPasswordInput"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Confirm Password"
-            android:inputType="textPassword"
-            android:layout_marginTop="8dp"
-            android:padding="12dp" />
+            <ImageView
+                android:id="@+id/logoImage"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:adjustViewBounds="true"
+                android:background="@drawable/circle_background"
+                android:padding="8dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/logo" />
 
-        <Button
-            android:id="@+id/registerButton"
-            android:text="Register"
-            android:textSize="18sp"
-            android:layout_marginTop="16dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/titleText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:text="CREATE ACCOUNT"
+                android:textAllCaps="true"
+                android:textColor="#FFFFFF"
+                android:textSize="28sp"
+                android:textStyle="bold" />
 
-    </LinearLayout>
+            <TextView
+                android:id="@+id/subTitleText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:gravity="center"
+                android:text="Join the mission and enter the system"
+                android:textColor="#B7C7D9"
+                android:textSize="16sp" />
+
+            <!-- Card -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:background="#182334"
+                android:orientation="vertical"
+                android:padding="18dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="New Agent Profile"
+                    android:textColor="#FFFFFF"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="Fill in your details to get started"
+                    android:textColor="#8FA3B8"
+                    android:textSize="13sp" />
+
+                <EditText
+                    android:id="@+id/nameInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:layout_marginTop="18dp"
+                    android:backgroundTint="#D8B26A"
+                    android:hint="Full name"
+                    android:inputType="textPersonName"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    android:textColor="#FFFFFF"
+                    android:textColorHint="#8FA3B8" />
+
+                <EditText
+                    android:id="@+id/emailInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:layout_marginTop="14dp"
+                    android:backgroundTint="#D8B26A"
+                    android:hint="Email address"
+                    android:inputType="textEmailAddress"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    android:textColor="#FFFFFF"
+                    android:textColorHint="#8FA3B8" />
+
+                <EditText
+                    android:id="@+id/ageInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:layout_marginTop="14dp"
+                    android:backgroundTint="#D8B26A"
+                    android:hint="Age"
+                    android:inputType="number"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    android:textColor="#FFFFFF"
+                    android:textColorHint="#8FA3B8" />
+
+                <Spinner
+                    android:id="@+id/stateSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:layout_marginTop="14dp"
+                    android:background="#223047"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    android:popupBackground="#FFFFFF" />
+
+                <EditText
+                    android:id="@+id/passwordInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:layout_marginTop="14dp"
+                    android:backgroundTint="#D8B26A"
+                    android:hint="Password"
+                    android:inputType="textPassword"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    android:textColor="#FFFFFF"
+                    android:textColorHint="#8FA3B8" />
+
+                <EditText
+                    android:id="@+id/confirmPasswordInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:layout_marginTop="14dp"
+                    android:backgroundTint="#D8B26A"
+                    android:hint="Confirm password"
+                    android:inputType="textPassword"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    android:textColor="#FFFFFF"
+                    android:textColorHint="#8FA3B8" />
+
+                <Button
+                    android:id="@+id/registerButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:layout_marginTop="22dp"
+                    android:backgroundTint="#D8B26A"
+                    android:text="REGISTER"
+                    android:textAllCaps="false"
+                    android:textColor="#08111F"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:alpha="0.9"
+                android:text="One step closer to escape."
+                android:textColor="#6F849B"
+                android:textSize="13sp" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="24dp" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
 </ScrollView>

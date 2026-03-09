@@ -2,21 +2,31 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginBottom="10dp"
+    android:background="#1B2432"
+    android:gravity="center_vertical"
     android:orientation="horizontal"
-    android:padding="12dp">
+    android:padding="14dp">
 
     <TextView
         android:id="@+id/userText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="User"
-        android:textSize="16sp"/>
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:text="Player Name"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/scoreText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="00:00"
-        android:textSize="16sp"/>
+        android:text="120s"
+        android:textColor="#7CFFB2"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
 </LinearLayout>

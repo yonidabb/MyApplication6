@@ -1,48 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:padding="32dp"
-    android:gravity="center"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#08111F">
 
+    <!-- רקע כהה -->
     <ImageView
-        android:id="@+id/logoImage"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
+        android:id="@+id/topBg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0.18"
         android:scaleType="centerCrop"
-        android:src="@drawable/logo"
-        android:layout_gravity="center"
-        android:background="@drawable/circle_background"/>
+        android:src="@drawable/bg_iran_gradient" />
 
-    <TextView
-        android:id="@+id/titleText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Start your adventure now!"
-        android:textSize="30sp"
-        android:layout_marginTop="16dp"/>
-
-    <Button
-        android:id="@+id/loginButton"
+    <!-- שכבת הצללה -->
+    <View
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Login"
-        android:textSize="26sp"
-        android:layout_marginTop="60dp"/>
+        android:layout_height="match_parent"
+        android:background="#CC08111F" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="------------------------------- or -------------------------------"
-        android:textSize="16sp"
-        android:layout_marginTop="16dp" />
-
-    <Button
-        android:id="@+id/createAccountButton"
+    <!-- תוכן -->
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Create account"
-        android:textSize="26sp"
-        android:layout_marginTop="16dp"/>
-</LinearLayout>
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="28dp">
+
+        <ImageView
+            android:id="@+id/logoImage"
+            android:layout_width="220dp"
+            android:layout_height="220dp"
+            android:layout_gravity="center"
+            android:adjustViewBounds="true"
+            android:background="@drawable/circle_background"
+            android:elevation="8dp"
+            android:padding="8dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/logo" />
+
+        <TextView
+            android:id="@+id/gameTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:text="ESCAPE FROM TEHRAN"
+            android:textAllCaps="true"
+            android:textColor="#FFFFFF"
+            android:textSize="28sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/titleText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:text="Start your adventure now!"
+            android:textColor="#C7D5E5"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/loginButton"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="54dp"
+            android:backgroundTint="#D8B26A"
+            android:text="LOGIN"
+            android:textAllCaps="false"
+            android:textColor="#08111F"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/orText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:text="— or —"
+            android:textColor="#8EA1B5"
+            android:textSize="16sp" />
+
+        <Button
+            android:id="@+id/createAccountButton"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="18dp"
+            android:backgroundTint="#1B2A3D"
+            android:text="CREATE ACCOUNT"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/bottomHint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="26dp"
+            android:alpha="0.9"
+            android:text="Break in. Solve fast. Escape alive."
+            android:textColor="#6F849B"
+            android:textSize="13sp" />
+
+    </LinearLayout>
+
+</RelativeLayout>
