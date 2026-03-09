@@ -38,6 +38,21 @@
         <item name="android:paddingTop">10dp</item>
         <item name="android:paddingBottom">10dp</item>
     </style>
+    <!-- 🎨 עיצוב לכפתורים של לוח המקשים -->
+    <style name="KeypadButtonStyled">
+        <item name="android:layout_width">65dp</item>
+        <item name="android:layout_height">65dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">26sp</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:background">@android:color/transparent</item>
+
+        <!-- זוהר אדום -->
+        <item name="android:shadowColor">#FF0000</item>
+        <item name="android:shadowDx">0</item>
+        <item name="android:shadowDy">0</item>
+        <item name="android:shadowRadius">22</item>
+    </style>
 
 
 
