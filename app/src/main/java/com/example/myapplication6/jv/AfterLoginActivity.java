@@ -14,6 +14,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.myapplication6.GameTimer;
 import com.example.myapplication6.R;
+import com.example.myapplication6.models.Match;
+import com.example.myapplication6.models.UserService;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -113,6 +115,15 @@ public class AfterLoginActivity extends AppCompatActivity {
                         statusText.setText("Starting in " + (millisLeft / 1000) + "...")
                 ),
                 () -> {
+                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                    if (user == null) {
+                        Log.e("SCORE_SAVE", "No user logged in - not saving score");
+                        return;
+                    }
+
+                    String userKey = user.getUid();
+                    UserService.getInstance().insertNewMatch(new Match(user));
+//                    userService.insertScore(new Score((int) score, user));
                     startActivity(new Intent(this, FirstQuestionActivity.class));
                     finish();
                 }
