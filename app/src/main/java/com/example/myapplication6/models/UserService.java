@@ -3,10 +3,14 @@ package com.example.myapplication6.models;
 import android.util.Log;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.Query;
@@ -74,7 +78,21 @@ public class UserService {
                 .addOnCompleteListener(activity, task -> {
                     if (task.isSuccessful()) {
                         FirebaseUser user = auth.getCurrentUser();
+
                         if (user != null) {
+
+                            UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                                    .setDisplayName(profile.getName())
+                                    .build();
+                            user.updateProfile(profileUpdates)
+                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            if (task.isSuccessful()) {
+                                                Log.d("AUTH", "User profile updated.");
+                                            }
+                                        }
+                                    });
                             profile.setUserID(user.getUid());
                             profile.setName(profile.getName());
                             saveProfile(profile);
@@ -167,5 +185,13 @@ public class UserService {
                 .add(score)
                 .addOnSuccessListener(doc -> Log.d(TAG, "Score saved id=" + doc.getId() + " " + score))
                 .addOnFailureListener(e -> Log.e(TAG, "Score save FAILED", e));
+    }
+
+    public void insertNewMatch(Match match) {
+        FirebaseFirestore.getInstance()
+                .collection("match")
+                .add(match)
+                .addOnSuccessListener(doc -> Log.d(TAG, "Match saved id=" + doc.getId() + " " + match))
+                .addOnFailureListener(e -> Log.e(TAG, "Match save FAILED", e));
     }
 }
