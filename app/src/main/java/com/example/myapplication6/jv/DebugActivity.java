@@ -42,6 +42,7 @@ public class DebugActivity extends AppCompatActivity {
 
     private TextView resultText;
     private final Executor executor = Executors.newSingleThreadExecutor();
+    private static final String TAG = "DebugActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -132,7 +133,7 @@ public class DebugActivity extends AppCompatActivity {
             String subject = inputSubject.getText().toString();
             String complexity = spinnerComplexity.getSelectedItem().toString();
             if (!subject.isEmpty()) {
-                generateExamWithVertexAI(subject, complexity, 0);
+                generateExamWithVertexAI(subject, complexity);
             } else {
                 Toast.makeText(this, "Subject cannot be empty", Toast.LENGTH_SHORT).show();
             }
@@ -142,14 +143,10 @@ public class DebugActivity extends AppCompatActivity {
         builder.show();
     }
 
-    private void generateExamWithVertexAI(String subject, String complexity, int retryCount) {
-        if (retryCount > 2) {
-            log("Giving up after 3 attempts to generate valid JSON ❌");
-            return;
-        }
+    private void generateExamWithVertexAI(String subject, String complexity) {
+        log("Generating exam for: " + subject + " (" + complexity + ")... ⏳");
 
-        log("Generating exam for: " + subject + " (" + complexity + ")... ⏳ (Attempt " + (retryCount + 1) + ")");
-
+        // Use gemini-2.0-flash for better stability
         GenerativeModel gm = FirebaseVertexAI.getInstance()
                 .generativeModel("gemini-2.5-flash");
         GenerativeModelFutures model = GenerativeModelFutures.from(gm);
@@ -171,41 +168,64 @@ public class DebugActivity extends AppCompatActivity {
         Futures.addCallback(response, new FutureCallback<GenerateContentResponse>() {
             @Override
             public void onSuccess(GenerateContentResponse result) {
-                String resultTextJson = result.getText();
-                Log.d("VertexAI", "Result: " + resultTextJson);
-                validateAndProcessExam(subject, complexity, resultTextJson, retryCount);
+                String resultTextJson = cleanJson(result.getText());
+                Log.d(TAG, "VertexAI Result cleaned: " + resultTextJson);
+                validateAndProcessExam(subject, complexity, resultTextJson, 0);
             }
 
             @Override
             public void onFailure(Throwable t) {
                 runOnUiThread(() -> {
                     log("VertexAI Error: " + t.getMessage());
-                    Log.e("VertexAI", "Error", t);
+                    Log.e(TAG, "Error in generateContent", t);
                 });
             }
         }, executor);
     }
 
+    private String cleanJson(String json) {
+        if (json == null) return "";
+        json = json.trim();
+        if (json.startsWith("```json")) {
+            json = json.substring(7);
+        } else if (json.startsWith("```")) {
+            json = json.substring(3);
+        }
+        if (json.endsWith("```")) {
+            json = json.substring(0, json.length() - 3);
+        }
+        return json.trim();
+    }
+
     private void validateAndProcessExam(String subject, String complexity, String json, int retryCount) {
         try {
             // Validate parsing
+            Log.d(TAG, "Validating JSON for subject: " + subject);
             ExamData.ExamParser.parse(json);
             log("JSON validated successfully! ✅");
-            saveExamToFirestore(subject, json);
+            saveExamToFirestore(subject, complexity, json);
         } catch (Exception e) {
-            runOnUiThread(() -> log("Validation failed ⚠️: " + e.getMessage() + ". Retrying fix with AI..."));
-            fixExamWithAI(subject, complexity, json, e.getMessage(), retryCount);
+            String errorMsg = e.getMessage();
+            Log.e(TAG, "Validation error: " + errorMsg + "\nJSON: " + json);
+            if (retryCount < 2) {
+                runOnUiThread(() -> log("Validation failed ⚠️ (Attempt " + (retryCount + 1) + "): " + errorMsg + ". Retrying fix with AI..."));
+                fixExamWithAI(subject, complexity, json, errorMsg, retryCount);
+            } else {
+                runOnUiThread(() -> log("Generation failed after all attempts ❌. Logging to failure collection."));
+                logFailedExam(subject, complexity, json, errorMsg);
+            }
         }
     }
 
     private void fixExamWithAI(String subject, String complexity, String badJson, String errorMsg, int retryCount) {
         GenerativeModel gm = FirebaseVertexAI.getInstance()
-                .generativeModel("gemini-2.5-flash");
+                .generativeModel("gemini-2.0-flash");
         GenerativeModelFutures model = GenerativeModelFutures.from(gm);
 
         String structure = "{\"version\":\"1.0\",\"exam\":{\"id\":\"string\",\"title\":\"string\",\"description\":\"string\",\"timeLimitSeconds\":900,\"questions\":[{\"id\":\"q1\",\"question\":\"string\",\"options\":[{\"id\":\"A\",\"text\":\"string\"}],\"correctOptionId\":\"A\",\"score\":10}]}}";
 
-        String prompt = "The following JSON generated for subject '" + subject + "' failed validation with error: " + errorMsg + ". " +
+        String promptPrefix = retryCount == 1 ? "FINAL ATTEMPT: " : "";
+        String prompt = promptPrefix + "The following JSON generated for subject '" + subject + "' failed validation with error: " + errorMsg + ". " +
                 "Please FIX the JSON to strictly follow this structure: " + structure + ". " +
                 "Ensure it is valid JSON and contains 10 questions. Return ONLY the fixed JSON string. " +
                 "Bad JSON: " + badJson;
@@ -219,18 +239,46 @@ public class DebugActivity extends AppCompatActivity {
         Futures.addCallback(response, new FutureCallback<GenerateContentResponse>() {
             @Override
             public void onSuccess(GenerateContentResponse result) {
-                String fixedJson = result.getText();
+                String fixedJson = cleanJson(result.getText());
                 validateAndProcessExam(subject, complexity, fixedJson, retryCount + 1);
             }
 
             @Override
             public void onFailure(Throwable t) {
-                runOnUiThread(() -> log("Fix attempt failed ❌: " + t.getMessage()));
+                runOnUiThread(() -> {
+                    log("Fix attempt " + (retryCount + 1) + " failed ❌: " + t.getMessage());
+                    Log.e(TAG, "Error in fixExamWithAI", t);
+                });
             }
         }, executor);
     }
 
-    private void saveExamToFirestore(String subject, String jsonContent) {
+    private void logFailedExam(String subject, String complexity, String badJson, String errorMsg) {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String uid = user != null ? user.getUid() : "anonymous";
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        Map<String, Object> failedData = new HashMap<>();
+        failedData.put("subject", subject);
+        failedData.put("complexity", complexity);
+        failedData.put("invalidJson", badJson);
+        failedData.put("errorMessage", errorMsg);
+        failedData.put("createdBy", uid);
+        failedData.put("createdAt", com.google.firebase.Timestamp.now());
+
+        db.collection("failed_exams")
+                .add(failedData)
+                .addOnSuccessListener(doc -> runOnUiThread(() -> {
+                    log("Failure logged to Firestore (ID: " + doc.getId() + ") 📄");
+                    Toast.makeText(this, "Generation failed twice. Logged for review.", Toast.LENGTH_LONG).show();
+                }))
+                .addOnFailureListener(e -> {
+                    Log.e(TAG, "Error logging failure", e);
+                    runOnUiThread(() -> log("Error logging failure: " + e.getMessage()));
+                });
+    }
+
+    private void saveExamToFirestore(String subject, String complexity, String jsonContent) {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user == null) {
             runOnUiThread(() -> log("Error: User not logged in"));
@@ -240,6 +288,7 @@ public class DebugActivity extends AppCompatActivity {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         Map<String, Object> examData = new HashMap<>();
         examData.put("subject", subject);
+        examData.put("complexity", complexity);
         examData.put("createdBy", user.getUid());
         examData.put("createdAt", com.google.firebase.Timestamp.now());
         examData.put("content", jsonContent);
@@ -261,7 +310,7 @@ public class DebugActivity extends AppCompatActivity {
                 .addOnFailureListener(e -> {
                     runOnUiThread(() -> {
                         log("Firestore Error: " + e.getMessage());
-                        Log.e("Firestore", "Error", e);
+                        Log.e(TAG, "Error in saveExamToFirestore", e);
                     });
                 });
     }
