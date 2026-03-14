@@ -40,6 +40,20 @@
         android:layout_marginTop="8dp" />
 
     <Button
+        android:id="@+id/btnCreateKahoot"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Create a new Kahoot Game"
+        android:layout_marginTop="8dp" />
+
+    <Button
+        android:id="@+id/btnLoadKahoot"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Load AI Kahoot Game"
+        android:layout_marginTop="8dp" />
+
+    <Button
         android:id="@+id/btnClear"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

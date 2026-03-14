@@ -45,6 +45,10 @@
             android:name=".jv.DebugActivity"
             android:exported="true">
         </activity>
+        <activity
+            android:name=".jv.ExamListActivity"
+            android:exported="false">
+        </activity>
 
         <activity
             android:name=".jv.FirstQuestionActivity"

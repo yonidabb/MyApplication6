@@ -13,6 +13,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myapplication6.R;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -30,7 +31,6 @@ import java.util.List;
  * - One question at a time
  * - 4 big colored answer buttons
  * - Timer + progress
- * - Loads exam JSON from assets/exam.json
  */
 public class ExamActivity extends AppCompatActivity {
 
@@ -59,7 +59,7 @@ public class ExamActivity extends AppCompatActivity {
     private long timeLeftMs = 0;
 
     // ===== Config =====
-    private static final String EXAM_FILE = "exam.json";
+    private static final String DEFAULT_EXAM_FILE = "exam.json";
     private static final int DEFAULT_TIME_PER_Q_SECONDS = 20; // Kahoot-ish default
 
     @Override
@@ -69,8 +69,54 @@ public class ExamActivity extends AppCompatActivity {
 
         bindViews();
 
+        String documentId = getIntent().getStringExtra("documentId");
+
+        if (documentId != null) {
+            loadExamFromFirestore(documentId);
+        } else {
+            loadExamFromAssets(DEFAULT_EXAM_FILE);
+        }
+
+        hintBtn.setOnClickListener(v -> showHint());
+        nextBtn.setOnClickListener(v -> goNext());
+
+        btnA.setOnClickListener(v -> onAnswerClicked(btnA));
+        btnB.setOnClickListener(v -> onAnswerClicked(btnB));
+        btnC.setOnClickListener(v -> onAnswerClicked(btnC));
+        btnD.setOnClickListener(v -> onAnswerClicked(btnD));
+    }
+
+    private void loadExamFromFirestore(String documentId) {
+        FirebaseFirestore.getInstance().collection("exams")
+                .document(documentId)
+                .get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    String json = documentSnapshot.getString("content");
+                    if (json != null) {
+                        initExam(json);
+                    } else {
+                        Toast.makeText(this, "Exam content is empty", Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    Toast.makeText(this, "Failed to load from Firestore: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    finish();
+                });
+    }
+
+    private void loadExamFromAssets(String fileName) {
         try {
-            String json = readAssetFile(EXAM_FILE);
+            String json = readAssetFile(fileName);
+            initExam(json);
+        } catch (Exception e) {
+            Toast.makeText(this, "Failed to load from assets: " + e.getMessage(), Toast.LENGTH_LONG).show();
+            finish();
+        }
+    }
+
+    private void initExam(String json) {
+        try {
             exam = ExamParser.parse(json);
 
             if (exam.shuffleQuestions) Collections.shuffle(exam.questions);
@@ -82,17 +128,9 @@ public class ExamActivity extends AppCompatActivity {
             renderQuestion();
 
         } catch (Exception e) {
-            Toast.makeText(this, "Failed to load exam: " + e.getMessage(), Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Parsing error: " + e.getMessage(), Toast.LENGTH_LONG).show();
             finish();
         }
-
-        hintBtn.setOnClickListener(v -> showHint());
-        nextBtn.setOnClickListener(v -> goNext());
-
-        btnA.setOnClickListener(v -> onAnswerClicked(btnA));
-        btnB.setOnClickListener(v -> onAnswerClicked(btnB));
-        btnC.setOnClickListener(v -> onAnswerClicked(btnC));
-        btnD.setOnClickListener(v -> onAnswerClicked(btnD));
     }
 
     private void bindViews() {
@@ -235,33 +273,17 @@ public class ExamActivity extends AppCompatActivity {
         boolean correct = chosenId.equals(q.correctOptionId);
         if (correct) totalScore += q.score;
 
-        if (correct) totalScore += q.score;
-
         scoreTv.setText("ניקוד: " + totalScore);
 
-// אם אתה רוצה עדיין להשאיר את ה-highlight על הכפתורים – אפשר להשאיר:
         highlightCorrectAndChosen(q, chosenId);
 
-// מציג מסך תוצאה עם שאלה+תשובה נכונה
         showResultOverlay(correct, q);
 
-// נועל ומתקדם אחרי רגע
         nextBtn.setEnabled(true);
         nextBtn.postDelayed(() -> {
             hideResultOverlay();
             goNext();
         }, 950);
-
-//        scoreTv.setText("ניקוד: " + totalScore);
-//
-//        // Visual feedback: show correct + show chosen if wrong
-//        highlightCorrectAndChosen(q, chosenId);
-//
-//        // enable next
-//        nextBtn.setEnabled(true);
-//
-//        // auto-advance after 900ms like Kahoot
-//        nextBtn.postDelayed(this::goNext, 900);
     }
 
     private void highlightCorrectAndChosen(QuestionModel q, String chosenId) {
@@ -379,12 +401,6 @@ public class ExamActivity extends AppCompatActivity {
 
         QuestionModel q = exam.questions.get(currentIndex);
         q.selectedOptionId = null;
-
-        // show correct
-//        highlightCorrectAndChosen(q, "");
-//
-//        nextBtn.setEnabled(true);
-//        nextBtn.postDelayed(this::goNext, 900);
 
         // show correct
         highlightCorrectAndChosen(q, "");
