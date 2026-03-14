@@ -71,6 +71,8 @@ public class AfterLoginActivity extends AppCompatActivity {
                 doLogout();
             } else if (id == R.id.nav_exit) {
                 finishAffinity(); // יציאה מהמשחק
+            } else if (id == R.id.nav_debug) {
+                startActivity(new Intent(this, DebugActivity.class));
             }
 
             drawerLayout.closeDrawers();

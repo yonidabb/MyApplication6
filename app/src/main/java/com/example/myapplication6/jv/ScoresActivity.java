@@ -51,7 +51,7 @@ public class ScoresActivity extends AppCompatActivity {
         loadGlobalScores();
     }
 
-    private void saveScore(String user, long score) {
+    private void saveScore(FirebaseUser user, long score) {
         userService.insertScore(new Score((int) score, user));
     }
 

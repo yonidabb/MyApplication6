@@ -1,9 +1,14 @@
 package com.example.myapplication6.models;
 
+import com.google.firebase.auth.FirebaseUser;
+
 import java.util.Date;
 import java.util.UUID;
 
 public class Score {
+
+    private String userid;
+
 
     private long score;      // <-- שים לב: זה בשניות
     private String user;
@@ -14,12 +19,18 @@ public class Score {
         // חובה ל-Firestore
     }
 
-    public Score(long score, String user) {
+    public Score(long score, FirebaseUser user) {
         this.score = score;
-        this.user = user;
+        this.user = user.getDisplayName();
+        this.userid = user.getUid();
         this.gameID = UUID.randomUUID().toString();
         this.date = new Date();
     }
+
+    public String getUserid() {
+        return userid;
+    }
+
 
     public long getScore() {
         return score; // זה כבר בשניות

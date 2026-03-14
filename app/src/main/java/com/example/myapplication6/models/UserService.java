@@ -135,7 +135,7 @@ public class UserService {
     public void getTopScoresForUser(String user, ScoresCallback callback) {
         FirebaseFirestore.getInstance()
                 .collection("scores")
-                .whereEqualTo("user", user)
+                .whereEqualTo("userid", user)
                 .orderBy("score", Query.Direction.ASCENDING)
                 .limit(10)
                 .get()
@@ -185,6 +185,24 @@ public class UserService {
                 .add(score)
                 .addOnSuccessListener(doc -> Log.d(TAG, "Score saved id=" + doc.getId() + " " + score))
                 .addOnFailureListener(e -> Log.e(TAG, "Score save FAILED", e));
+    }
+
+    public void saveScoreToFirebase(long timeLeftMillis) {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user == null) {
+            Log.e("SCORE_SAVE", "No user logged in - not saving score");
+            return;
+        }
+
+        int scoreSec = (int) (timeLeftMillis / 1000);
+
+        if (scoreSec <= 0) {
+            Log.w("SCORE_SAVE", "Ignoring scoreSec<=0. scoreSec=" + scoreSec);
+            return;
+        }
+
+        UserService.getInstance().insertScore(new Score(scoreSec, user));
+        Log.d("SCORE_SAVE", "Saved scoreSec=" + scoreSec + " user=" + user);
     }
 
     public void insertNewMatch(Match match) {

@@ -61,30 +61,13 @@ public class NextActivity extends AppCompatActivity {
         Log.d("NextActivity", "Game finished. Time left: " + timeLeftMillis + " ms");
 
         if (savedInstanceState == null) {
-            saveScoreToFirebase(timeLeftMillis);
+            UserService.getInstance().saveScoreToFirebase(timeLeftMillis);
         }
 
         startCrashThread();
     }
 
-    private void saveScoreToFirebase(long timeLeftMillis) {
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user == null) {
-            Log.e("SCORE_SAVE", "No user logged in - not saving score");
-            return;
-        }
 
-        String userKey = user.getUid();
-        int scoreSec = (int) (timeLeftMillis / 1000);
-
-        if (scoreSec <= 0) {
-            Log.w("SCORE_SAVE", "Ignoring scoreSec<=0. scoreSec=" + scoreSec);
-            return;
-        }
-
-        UserService.getInstance().insertScore(new Score(scoreSec, userKey));
-        Log.d("SCORE_SAVE", "Saved scoreSec=" + scoreSec + " user=" + userKey);
-    }
 
     private void startCrashThread() {
         crashThread = new Thread(() -> {
