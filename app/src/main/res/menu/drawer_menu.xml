@@ -20,4 +20,8 @@
         android:id="@+id/nav_exit"
         android:title="❌ Exit Game" />
 
+    <item
+        android:id="@+id/nav_debug"
+        android:title="⚙️ Debug" />
+
 </menu>

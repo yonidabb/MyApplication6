@@ -13,6 +13,8 @@ import com.example.myapplication6.R;
 import com.example.myapplication6.models.Score;
 import com.example.myapplication6.models.UserService;
 
+import java.util.Random;
+
 public class DebugActivity extends AppCompatActivity {
 
     private TextView resultText;
@@ -34,10 +36,13 @@ public class DebugActivity extends AppCompatActivity {
 
         btnFirebase.setOnClickListener(v ->
                 {
-                    log("Sending score ✅");
-                    UserService.getInstance().insertScore(
-                            new Score(activityTimer.getGameTime(), "yoni")
-                    );
+                    // Random number between 50 and 400
+                    long timeLeftMillis = new Random().nextInt(400 - 50 + 1) + 50;
+                    timeLeftMillis*=1000;
+
+                    log("Sending score ✅ (" + timeLeftMillis + "ms)");
+                    UserService.getInstance().saveScoreToFirebase(timeLeftMillis);
+
 
 
                 }
